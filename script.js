@@ -1,17 +1,17 @@
-let gravity = 0.2;
+let gravity = 0.15;
 let bird_dy = 0;
 let score = 0;
 let game_state = "start";
 
 let pipes = [];
-let pipe_gap = 150;
+let pipe_gap =260;
 
 console.log(bird_dy);
 
 let gameInterval = null;
 
 let frame = 0;
-const frame_time = 100;
+const frame_time = 180;
 
 let bird = document.getElementById("bird");
 let score_display = document.getElementById("score");
