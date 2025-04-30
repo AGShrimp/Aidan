@@ -63,5 +63,6 @@ body {
 }
 .bottom-pipe {
     border-top: 5px solid darkgreen;
+    background:url("obstacles/Obstacles.png")
 }
 
