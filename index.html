@@ -4,13 +4,15 @@
     <title>Flappy Bird Game</title>
     <meta name="description" content="this is a fun Game" />
     <link rel="stylesheet" href="./style.css" />
-  </head>
+    <script src="./script.js" defer></script>
+ 
+</head>
   <body>
     <div id="game_container">
       <img id="bird" src="./assets/Bird/Bird.png" alt="bird" />   
-       <p>score:0</p>
+       <p id="score">score:0</p>
     </div> 
-    <button onclick="">startgame</button>
+    <button id="start-btn" onclick="onStartButtonClick()">startgame</button>
 </body>
 </html>
 
