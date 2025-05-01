@@ -6,12 +6,12 @@ let game_state = "start";
 let pipes = [];
 let pipe_gap = 260;
 
-console.log(bird_dy);
-
 let gameInterval = null;
 
 let frame = 0;
-const frame_time = 100;
+const frame_time = 200;
+
+let highScore = localStorage.getItem("highScore") || 0;
 
 let bird = document.getElementById("bird");
 let score_display = document.getElementById("score");
@@ -21,7 +21,6 @@ let start_btn = document.getElementById("start-btn");
 // session 3
 function setScore(newScore) {
   score = newScore;
-  score_display.textContent = "Score: " + score;
 }
 
 function applyGravity() {
@@ -31,10 +30,10 @@ function applyGravity() {
   birdTop = Math.max(birdTop, 0);
   birdTop = Math.min(birdTop, game_container.offsetHeight - bird.offsetHeight);
   bird.style.top = birdTop + "px";
-}
-let angle = Math.min(Math.max(bird_dy *2, -30), 90);
-bird.style.transform = "roatate(S(angle)deg)";
 
+  let angle = Math.min(Math.max(bird_dy * 2, -30), 90);
+  bird.style.transform = `rotate(${angle}deg)`;
+}
 
 function startGame() {
   if (gameInterval !== null) return;
@@ -45,6 +44,9 @@ function startGame() {
     checkCollision();
 
     frame++;
+
+    highScore = localStorage.getItem("highScore") || 0;
+    score_display.textContent = "Score: " + score + " | Best: " + highScore;
 
     getDifficultySettings(); //update difficulty before starting
 
@@ -123,7 +125,7 @@ function checkCollision() {
     }
   }
   // Collision with top and bottom
-  if (                                                                                                                            
+  if (
     bird.offsetTop <= 0 ||
     bird.offsetTop >= game_container.offsetHeight - bird.offsetHeight
   ) {
@@ -146,6 +148,9 @@ function checkCollision() {
 
 // End game
 function endGame() {
+  if(Number(score) > Number(highScore)){
+    localStorage.setItem("highScore", score)
+  }
   clearInterval(gameInterval);
   gameInterval = null;
 
@@ -164,12 +169,12 @@ function resetGame() {
   setScore(0);
   frame = 0;
   game_state = "Start";
-  score_display.textContent = "";
+  // score_display.textContent = "";
 }
 
 // Start button
 start_btn.addEventListener("click", () => {
-  if (game_state !== "Play") {  
+  if (game_state !== "Play") {
     game_state = "Play";
     startGame();
   }
