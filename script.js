@@ -4,27 +4,25 @@ let score = 0;
 let game_state = "start";
 
 let pipes = [];
-let pipe_gap =260;
+let pipe_gap = 260;
 
 console.log(bird_dy);
 
 let gameInterval = null;
 
 let frame = 0;
-const frame_time = 180;
+const frame_time = 100;
 
 let bird = document.getElementById("bird");
 let score_display = document.getElementById("score");
 let game_container = document.getElementById("game_container");
 let start_btn = document.getElementById("start-btn");
 
-
 // session 3
 function setScore(newScore) {
   score = newScore;
   score_display.textContent = "Score: " + score;
 }
-
 
 function applyGravity() {
   bird_dy += gravity;
@@ -34,6 +32,9 @@ function applyGravity() {
   birdTop = Math.min(birdTop, game_container.offsetHeight - bird.offsetHeight);
   bird.style.top = birdTop + "px";
 }
+let angle = Math.min(Math.max(bird_dy *2, -30), 90);
+bird.style.transform = "roatate(S(angle)deg)";
+
 
 function startGame() {
   if (gameInterval !== null) return;
@@ -44,6 +45,8 @@ function startGame() {
     checkCollision();
 
     frame++;
+
+    getDifficultySettings(); //update difficulty before starting
 
     // Every 200 frames (~2 seconds), create new pipe
     if (frame % frame_time === 0) {
@@ -61,7 +64,6 @@ document.addEventListener("keydown", (e) => {
     bird_dy -= 7;
   }
 });
-
 
 function onStartButtonClick() {
   if (game_state !== "Play") game_state = "Play";
@@ -105,7 +107,6 @@ function movePipes() {
   pipes = pipes.filter((pipe) => pipe.offsetLeft + pipe.offsetWidth > 0);
 }
 
-
 function checkCollision() {
   let birdRect = bird.getBoundingClientRect();
   for (let pipe of pipes) {
@@ -122,7 +123,7 @@ function checkCollision() {
     }
   }
   // Collision with top and bottom
-  if (
+  if (                                                                                                                            
     bird.offsetTop <= 0 ||
     bird.offsetTop >= game_container.offsetHeight - bird.offsetHeight
   ) {
@@ -168,8 +169,20 @@ function resetGame() {
 
 // Start button
 start_btn.addEventListener("click", () => {
-  if (game_state !== "Play") {
+  if (game_state !== "Play") {  
     game_state = "Play";
     startGame();
   }
 });
+let pipeSpeed = 3;
+
+function getDifficultySettings() {
+  const selected = document.getElementById("difficulty-select").value;
+  if (selected === "easy") {
+    pipeSpeed = 2;
+  } else if (selected === "medium") {
+    pipeSpeed = 3;
+  } else if (selected === "hard") {
+    pipeSpeed = 4;
+  }
+}

@@ -29,6 +29,8 @@ body {
   left: 40%;
   background: url ("asset/bird.png") no-repeat center center;
   background-size: cover;
+  transform-origin: center ;
+  transition: transform 0.1s linear;
 }
 #score {
   position: absolute;
@@ -57,12 +59,18 @@ body {
   background-color: green;
 }
 .top-pipe {
-    top: 0;
-    border-bottom: 5px solid darkgreen
-
+  top: 0;
+  border-bottom: 5px solid darkgreen;
 }
 .bottom-pipe {
-    border-top: 5px solid darkgreen;
-    background:url("obstacles/Obstacles.png")
+  border-top: 5px solid darkgreen;
+  background: url("obstacles/Obstacles.png");
 }
-
+#difficulty-select {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  padding: 8px;
+  font-size: 15;
+  border-radius: 5px;
+}
